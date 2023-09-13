@@ -15,21 +15,21 @@
 
 // Varsayılan olarak, akış yok edildikten sonra bir 'kapat' olayı yayınlar. Bu davranışı değiştirmek için emitClose seçeneğini false olarak ayarlayın.
 
-import {open} from 'node:fs/promises';
+const {open, createReadStream} = require('fs').promises;
 
-const fd = await open('dosya.txt');
+/* const fd = open('dosya.txt');
 const stream = fd.createReadStream();
 setTimeout(() => {
     stream.close();
     stream.push(null);
     stream.read(0);
-}, 100);
+}, 100); */
 
 // Eğer `autoClose` değeri false olarak ayarlanırsa, dosya tanımlayıcısı (file descriptor) hata oluşsa bile otomatik olarak kapatılmayacaktır. Dosya tanımlayıcısının kapatılması ve dosya tanımlayıcı sızıntısının olmaması, uygulamanın sorumluluğundadır. Eğer `autoClose` true olarak ayarlanmışsa (varsayılan davranış), 'error' veya 'end' olayları gerçekleştiğinde dosya tanımlayıcısı otomatik olarak kapatılacaktır.
 
 // 100 bayt uzunluğundaki bir dosyanın son 10 baytını okumak için aşağıdaki örnek kullanılabilir:
 
-fd.createReadStream({start: 90, end: 99});
+/* fd.createReadStream({start: 90, end: 99}); */
 
 /* filehandle.createReadStream([options]), Node.js'de bulunan ve dosyadan okuma işlemi için kullanılan bir yöntemdir. Bu yöntem, belirtilen bir dosyanın içeriğini okumak için bir okuma akışı oluşturur ve bu akışı kullanarak dosyadan veri okuma işlemini yapmanıza olanak tanır.
 
@@ -44,8 +44,6 @@ highWaterMark: Bu, okuma işlemi sırasında tampon boyutunu belirler. Varsayıl
 autoClose ve emitClose: Bu seçenekler, dosya işlemi tamamlandığında dosyanın otomatik olarak kapatılıp kapatılmayacağını ve 'kapat' olayının yayınlanıp yayınlanmayacağını belirtir.
 
 Örnek bir kullanım senaryosu şu şekilde olabilir: */
-
-const {open, createReadStream} = require('fs').promises;
 
 async function readPartialFile() {
     try {
